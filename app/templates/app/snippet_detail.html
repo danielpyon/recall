@@ -1,0 +1,50 @@
+{% extends "base_generic.html" %}
+
+{% load pygmentify %}
+
+{% block content %}
+
+<h1>{{ snippet.title }}</h1>
+
+<p><strong>Language:</strong> {{ snippet.language }}</p>
+<p><strong>Added:</strong> {{ snippet.pub_date }}</p>
+<p>
+    <strong>Tags:</strong>
+    {% for tag in snippet.tags.all %}
+        <a href="{% url 'app:tag-detail' tag.pk %}">{{ tag.tag_type }}</a>
+        {% if not forloop.last %}
+        //
+        {% endif %}
+    {% endfor %}
+</p>
+
+<p><strong>Starred?</strong> {% if snippet.starred %} &#9733; {% else %} &#9734; {% endif %}</p>
+
+<hr>
+
+<div>
+    <h2>Description</h2>
+    <p>{{ snippet.description }}</p>
+
+    <h2>Code</h2>
+    {% pygment %}
+    <pre lang="{{ snippet.language|lower }}">
+        {{ snippet.code }}
+    </pre>
+    {% endpygment %}
+
+    <form action="{% url 'app:snippet-raw' snippet.id %}" method="GET">
+        {% csrf_token %}
+        <button type="submit">Raw</button>
+    </form>
+
+    <form action="{% url 'app:snippet-delete' snippet.id %}" method="GET">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+
+</div>
+
+
+{% endblock %}
+

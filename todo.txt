@@ -1,0 +1,16 @@
+- add forms for snippets and tags
+- update functionality
+- sign up page
+
+- test the snippet_list (make sure only user's querys work)
+- test authentication (are you SURE people can't access others' pages?)
+
+- add team functionality
+    - groups?
+
+- styling
+
+later:
+- security (csrf, escaping, https, etc)
+- deployment (asgi, wsgi, docker/kubernetes)
+- async django
