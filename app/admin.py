@@ -18,10 +18,6 @@ class SnippetAdmin(admin.ModelAdmin):
                 'starred',
                 'user']
         }),
-        ('Date information', {
-            'fields': ['pub_date'],
-            'classes': ['collapse']
-        }),
     ]
     inlines = [TagInline]
     save_as = True

@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.views import generic
+from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
-
 from .models import Tag, Snippet
+from .forms import SnippetForm, TagForm
 
 def index(request):
     return render(request, 'index.html')
@@ -59,3 +60,29 @@ class TagListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Tag.objects.filter(user=self.request.user)
+
+@login_required
+def snippet_add(request):
+    form = SnippetForm(request.POST or None)
+    user = request.user
+    form.fields['tags'].queryset = Tag.objects.filter(user=user)
+
+    if form.is_valid():
+        snip = form.save(commit=False)
+        snip.user = request.user
+        snip.save()
+        return HttpResponseRedirect(reverse('app:snippets'))
+
+    return render(request, 'app/snippet_form.html', {'form': form})
+
+@login_required
+def tag_add(request):
+    form = TagForm(request.POST or None)
+
+    if form.is_valid():
+        tag = form.save(commit=False)
+        tag.user = request.user
+        tag.save()
+        return HttpResponseRedirect(reverse('app:tags'))
+
+    return render(request, 'app/tag_form.html', {'form': form})

@@ -23,10 +23,10 @@ class Snippet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) # deletes snippet when user is deleted
     language = models.CharField(max_length=100)
     title = models.CharField(max_length=200, default='')
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', auto_now_add=True, blank=True)
     starred = models.BooleanField(default=False)
-    description = models.TextField(default="")
-    tags = models.ManyToManyField(Tag)
+    description = models.TextField(blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     class Meta:
         ordering = ['-pub_date', 'language']

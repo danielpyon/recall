@@ -1,9 +1,8 @@
 - add forms for snippets and tags
-- update functionality
+- update snippets and tags
 - sign up page
 
 - test the snippet_list (make sure only user's querys work)
-- test authentication (are you SURE people can't access others' pages?)
 
 - add team functionality
     - groups?
