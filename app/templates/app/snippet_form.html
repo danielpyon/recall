@@ -2,16 +2,39 @@
 
 {% block content %}
 
+<style>
+    .dropdown-menu {
+        max-height: 280px;
+        overflow-y: auto;
+    }
+    .editor-button {
+        margin: 5px;
+    }
+</style>
+
 <h1>Add Snippet</h1>
 
 <h2>Code:</h2>
+
+<div class="btn-group py-4">
+    <div class="dropdown editor-button">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Themes <span class="caret"></span></button>
+        <div class="dropdown-menu" id="theme-menu">
+        </div>
+    </div>
+    <div class="dropdown editor-button">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Language <span class="caret"></span></button>
+        <div class="dropdown-menu" id="language-menu">
+        </div>
+    </div>
+</div>
+
 <div id="editor" style="height: 500px; width: 100%"></div>
 
 <form action="{% url 'app:snippet-add' %}" method="post">
     {% csrf_token %}
     <span style="display: none;">{{ form.code }}</span>
-    <h2><label for="id_language">Language: </label></h2>
-    {{ form.language }}
+    <span style="display: none;">{{ form.language }}</span>
     <h2><label for="id_title">Title: </label></h2>
     {{ form.title }}
     <h2><label for="id_description">Description: </label></h2>
@@ -31,16 +54,67 @@
 <script>
     const editor = ace.edit('editor');
     const txt = document.getElementById('id_code');
-    editor.setTheme('ace/theme/monokai');
-    editor.session.setMode('ace/mode/scheme');
+    const lng = document.getElementById('id_language');
+    const theme_menu = document.getElementById('theme-menu');
+    const language_menu = document.getElementById('language-menu');
+    const themes = ace.require('ace/ext/themelist').themes;
+    const languages = ace.require('ace/ext/modelist').modes;
+
+    // Set the textarea to whatever's in the editor    
     editor.getSession().on('change', () => {
         txt.value = editor.getSession().getValue();
-        console.log(txt.value)
     });
-    txt.value = editor.getSession().getValue(); // Initial value set
+    txt.value = editor.getSession().getValue();
 
-    console.log(ace.require('ace/ext/themelist'));
-    console.log(ace.require('ace/ext/modelist'));
+    // Dropdown menu logic
+    function make_list_elements(n) {
+        let list_elements = [];
+        for (let i = 0; i < n; i++) {
+            const li = document.createElement('li');
+            li.className = 'dropdown-item';
+            li.style.cursor = 'pointer';
+            list_elements.push(li);
+        }
+        return list_elements;
+    }
+
+    // text_contents: list of strings (contents for each dropdown item)
+    // onclick_fn: what to do onclick
+    function fill_content_of_list_elements(list_items, text_contents, menu_object, onclick_fn) {
+        const n = list_items.length;
+        for (let i = 0; i < n; i++) {
+            list_items[i].textContent = text_contents[i];
+            list_items[i].onclick = () => {
+                onclick_fn(i);
+                
+                list_items[i].className = 'dropdown-item active';
+                for (let j = 0; j < n; j++) {
+                    if (j != i)
+                        list_items[j].className = 'dropdown-item';
+                }
+            }
+            menu_object.appendChild(list_items[i]);
+        }
+    }
+
+    const theme_list_elements = make_list_elements(themes.length);
+    fill_content_of_list_elements(
+        theme_list_elements,
+        themes.map(x => x.caption),
+        theme_menu,
+        (i) => { editor.setTheme(themes[i].theme); });
+
+    const language_list_elements = make_list_elements(languages.length);
+    fill_content_of_list_elements(
+        language_list_elements,
+        languages.map(x => x.caption),
+        language_menu,
+        (i) => { editor.session.setMode(languages[i].mode); lng.value = languages[i].name; }
+    );
+
+    // Default editor theme and language
+    theme_list_elements[0].click();
+    language_list_elements.filter(x => x.textContent == 'Text')[0].click();
 </script>
 
 {% endblock %}
