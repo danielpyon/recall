@@ -1,13 +1,23 @@
-- add forms for snippets and tags
-- update snippets and tags
-- sign up page
+- update snippets and tags (should be easy with generic views)
 
-- test the snippet_list (make sure only user's querys work)
+- delete user
+
+- option to choose language in code editor
+
+- change icons in base_generic
 
 - add team functionality
-    - groups?
+
+- user shouldn't be able to see any of the auth pages when logged in (except maybe logged_out.html)
 
 - styling
+    - login page
+    - logged out page
+    - pagination in base_generic
+    - home page
+
+- unit testing
+    - test each view
 
 later:
 - security (csrf, escaping, https, etc)

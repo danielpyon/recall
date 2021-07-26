@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
+from .views import SignupFormView
 
 urlpatterns = [
     path('', RedirectView.as_view(url='app/', permanent=True)),
     path('app/', include('app.urls')),
+    path('accounts/signup/', SignupFormView.as_view(), name='signup'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ]

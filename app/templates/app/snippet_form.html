@@ -1,12 +1,40 @@
 {% extends "base_generic.html" %}
 
+{% block sidebar %}
+<ul class="nav nav-pills flex-column mb-auto">
+  <li class="nav-item">
+  <a href="{% url 'app:index' %}" class="nav-link text-white">
+      <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+      Home
+  </a>
+  </li>
+  <li>
+  <a href="{% url 'app:snippets' %}" class="nav-link active" aria-current="page">
+      <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+      Snippets
+  </a>
+  </li>
+  <li>
+  <a href="{% url 'app:tags' %}" class="nav-link text-white">
+      <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+      Tags
+  </a>
+  </li>
+  <li>
+  <a href="" class="nav-link text-white">
+      <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+      Teams
+  </a>
+  </li>
+</ul>
+{% endblock %}
+
 {% block content %}
 
 <h1>Add Snippet</h1>
 
 <h2>Code:</h2>
-<div id="editor" style="height: 500px; width: 700px">(define (square x) (* x x))
-</div>
+<div id="editor" style="height: 500px; width: 100%"></div>
 
 <form action="{% url 'app:snippet-add' %}" method="post">
     {% csrf_token %}
@@ -26,6 +54,9 @@
 </form>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-modelist.min.js" integrity="sha512-DVhsjVBjwWmU6Tb43nTK5ZhIUVdwOEiKPm8KTk3pE28oN/ZUGCJm7ufcUZq8yo2uYFkNfPZ9aed16cAKEj/2gw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-themelist.min.js" integrity="sha512-5CwAfXQtNsk5OzybMAJ3U14TStTq6jUHJoWxu58KOyioLXO3fX6FPUKaYp/2iF6yZMkv38fvh3nH+Vq94R2BUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
     const editor = ace.edit('editor');
     const txt = document.getElementById('id_code');
@@ -36,6 +67,9 @@
         console.log(txt.value)
     });
     txt.value = editor.getSession().getValue(); // Initial value set
+
+    console.log(ace.require('ace/ext/themelist'));
+    console.log(ace.require('ace/ext/modelist'));
 </script>
 
 {% endblock %}
