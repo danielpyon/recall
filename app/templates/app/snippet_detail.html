@@ -2,35 +2,6 @@
 
 {% load pygmentify %}
 
-{% block sidebar %}
-<ul class="nav nav-pills flex-column mb-auto">
-  <li class="nav-item">
-  <a href="{% url 'app:index' %}" class="nav-link text-white">
-      <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-      Home
-  </a>
-  </li>
-  <li>
-  <a href="{% url 'app:snippets' %}" class="nav-link active" aria-current="page">
-      <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-      Snippets
-  </a>
-  </li>
-  <li>
-  <a href="{% url 'app:tags' %}" class="nav-link text-white">
-      <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-      Tags
-  </a>
-  </li>
-  <li>
-  <a href="" class="nav-link text-white">
-      <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-      Teams
-  </a>
-  </li>
-</ul>
-{% endblock %}
-
 {% block content %}
 
 <h1>{{ snippet.title }}</h1>

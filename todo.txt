@@ -10,16 +10,16 @@
 
 - user shouldn't be able to see any of the auth pages when logged in (except maybe logged_out.html)
 
-- styling
-    - login page
-    - logged out page
-    - pagination in base_generic
-    - home page
+- can't scroll in snippet_form.html
 
-- unit testing
-    - test each view
+- tests
+    - unit test each view
 
-later:
-- security (csrf, escaping, https, etc)
-- deployment (asgi, wsgi, docker/kubernetes)
-- async django
+- security
+    - csrf
+    - escaping
+    - https
+
+- deployment
+    - asgi or wsgi
+    - docker or kubernetes

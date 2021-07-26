@@ -2,91 +2,15 @@
 
 {% load static %}
 
-{% block head %}
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'app/style.css' %}">
-        
-        {% if not user.is_authenticated %}
-        <link rel="stylesheet" type="text/css" href="{% static 'app/cover.css' %}">
-        {% else %}
-        <link rel="stylesheet" type="text/css" href="{% static 'app/sidebars.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'app/svgicons.css' %}">
-        {% endif %}
-
-        <title>{% block title %}Recall{% endblock %}</title>
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" href="{% static 'django_pygments/css/pygments_default.css' %}" />
-    </head>
-{% endblock %}
-
-{% block sidebar %}
-<ul class="nav nav-pills flex-column mb-auto">
-  <li class="nav-item">
-  <a href="{% url 'app:index' %}" class="nav-link active" aria-current="page">
-      <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-      Home
-  </a>
-  </li>
-  <li>
-  <a href="{% url 'app:snippets' %}" class="nav-link text-white">
-      <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-      Snippets
-  </a>
-  </li>
-  <li>
-  <a href="{% url 'app:tags' %}" class="nav-link text-white">
-      <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-      Tags
-  </a>
-  </li>
-  <li>
-  <a href="" class="nav-link text-white">
-      <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-      Teams
-  </a>
-  </li>
-</ul>
-{% endblock %}
-
-
 {% block content %}
     {% if user.is_authenticated %}
     <ul>
         <li><a href="{% url 'app:snippet-add' %}">Add new snippet</a></li>
         <li><a href="{% url 'app:tag-add' %}">Add new tag</a></li>
     </ul>
+    {% else %}
+        <p>Welcome to Recall, a programming tool that allows you to store snippets of code along with short explanations.</p>
+        <a class="nav-link" href="{% url 'login' %}">Login</a>
+        <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
     {% endif %}
-{% endblock %}
-
-{% block landing %}
-{% if not user.is_authenticated %}
-<div class="d-flex h-100 text-center text-white bg-dark" style="width:100%;">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
-            <div>
-                <h3 class="float-md-start mb-0">Recall</h3>
-                <nav class="nav nav-masthead justify-content-center float-md-end">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
-                </nav>
-            </div>
-        </header>
-
-        <main class="px-3">
-            <h1>Recall</h1>
-            <p class="lead">Welcome to Recall, a programming tool that allows you to store snippets of code along with short explanations.</p>
-            <p class="lead">
-                <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
-            </p>
-        </main>
-
-        <footer class="mt-auto text-white-50">
-        <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
-        </footer>
-    </div>
-</div>
-{% endif %}
 {% endblock %}
