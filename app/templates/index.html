@@ -4,13 +4,24 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-    <ul>
-        <li><a href="{% url 'app:snippet-add' %}">Add new snippet</a></li>
-        <li><a href="{% url 'app:tag-add' %}">Add new tag</a></li>
-    </ul>
+        <div class="row align-items-center">
+            <div class="col">
+                <ul>
+                    <li><a href="{% url 'app:snippet-add' %}">Add new snippet</a></li>
+                    <li><a href="{% url 'app:tag-add' %}">Add new tag</a></li>
+                </ul>
+            </div>
+        </div>
     {% else %}
-        <p>Welcome to Recall, a programming tool that allows you to store snippets of code along with short explanations.</p>
-        <a class="nav-link" href="{% url 'login' %}">Login</a>
-        <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+        <div class="row align-items-center">
+            <div class="col">
+
+                <p>Welcome to Recall, a programming tool that allows you to store snippets of code along with short explanations.</p>
+                <ul>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

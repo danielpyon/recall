@@ -14,6 +14,7 @@
 
 - tests
     - unit test each view
+        - test pagination
 
 - security
     - csrf
