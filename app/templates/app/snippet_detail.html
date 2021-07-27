@@ -1,7 +1,5 @@
 {% extends "base_generic.html" %}
 
-{% load pygmentify %}
-
 {% block content %}
 
 <div class="jumbotron">
@@ -25,28 +23,97 @@
 <hr>
 
 <div>
-    <h2>Description</h2>
+    <h3>Description</h3>
     <p>{{ snippet.description }}</p>
 
-    <h2>Code</h2>
-    {% pygment %}
-    <pre lang="{{ snippet.language|lower }}">
-        {{ snippet.code }}
-    </pre>
-    {% endpygment %}
+    <br>
+    <h3>Code</h3>
 
+    <!-- CODE EDITOR START -->
+    <span hidden id="metadata-language">{{ snippet.language|lower }}</span>
+    <span hidden id="metadata-code">{{ snippet.code }}</span>
+    <div class="btn-group py-4">
+        <div class="dropdown editor-button">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Theme <span class="caret"></span></button>
+            <div class="dropdown-menu" id="theme-menu">
+            </div>
+        </div>
+    </div>
+    <div id="editor" style="height: 500px; width: 100%;"></div>
+    <!-- CODE EDITOR END -->
+
+    <br>
     <form action="{% url 'app:snippet-raw' snippet.id %}" method="GET">
         {% csrf_token %}
-        <button type="submit">Raw</button>
+        <button class="btn-default btn" type="submit">Raw</button>
     </form>
 
-    <form action="{% url 'app:snippet-delete' snippet.id %}" method="GET">
+    <br>
+    <form style="width:250px; margin: auto;" action="{% url 'app:snippet-delete' snippet.id %}" method="GET">
         {% csrf_token %}
-        <button type="submit">Delete</button>
+        <button class="btn btn-danger btn-lg btn-block" type="submit">Delete</button>
     </form>
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-modelist.min.js" integrity="sha512-DVhsjVBjwWmU6Tb43nTK5ZhIUVdwOEiKPm8KTk3pE28oN/ZUGCJm7ufcUZq8yo2uYFkNfPZ9aed16cAKEj/2gw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-themelist.min.js" integrity="sha512-5CwAfXQtNsk5OzybMAJ3U14TStTq6jUHJoWxu58KOyioLXO3fX6FPUKaYp/2iF6yZMkv38fvh3nH+Vq94R2BUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const editor = ace.edit('editor');
+    const theme_menu = document.getElementById('theme-menu');
+    const themes = ace.require('ace/ext/themelist').themes;
+
+    const code = document.getElementById('metadata-code').innerText;
+    const lang = document.getElementById('metadata-language').innerText;
+
+    editor.session.setMode('ace/mode/' + lang);
+    editor.setValue(code, 1);
+    editor.clearSelection();
+    editor.session.setUseWorker(false);
+    editor.setShowPrintMargin(false);
+    editor.setReadOnly(true);
+
+    // Dropdown menu logic
+    function make_list_elements(n) {
+        let list_elements = [];
+        for (let i = 0; i < n; i++) {
+            const li = document.createElement('li');
+            li.className = 'dropdown-item';
+            li.style.cursor = 'pointer';
+            list_elements.push(li);
+        }
+        return list_elements;
+    }
+
+    // text_contents: list of strings (contents for each dropdown item)
+    // onclick_fn: what to do onclick
+    function fill_content_of_list_elements(list_items, text_contents, menu_object, onclick_fn) {
+        const n = list_items.length;
+        for (let i = 0; i < n; i++) {
+            list_items[i].textContent = text_contents[i];
+            list_items[i].onclick = () => {
+                onclick_fn(i);
+                
+                list_items[i].className = 'dropdown-item active';
+                for (let j = 0; j < n; j++) {
+                    if (j != i)
+                        list_items[j].className = 'dropdown-item';
+                }
+            }
+            menu_object.appendChild(list_items[i]);
+        }
+    }
+
+    const theme_list_elements = make_list_elements(themes.length);
+    fill_content_of_list_elements(
+        theme_list_elements,
+        themes.map(x => x.caption),
+        theme_menu,
+        (i) => { editor.setTheme(themes[i].theme); });
+
+    theme_list_elements[0].click();
+</script>
 
 {% endblock %}
 
