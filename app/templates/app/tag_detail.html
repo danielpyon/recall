@@ -3,7 +3,9 @@
 {% load filters %}
 {% block content %}
 
-<h1>{{ tag.tag_type }}</h1>
+<div class="jumbotron">
+    <h1>{{ tag.tag_type }}</h1>
+</div>
 
 <div>
     <form action="{% url 'app:tag-delete' tag.id %}" method="GET">

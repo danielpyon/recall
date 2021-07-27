@@ -74,6 +74,43 @@
             </div>
             {% endif %}
         {% endblock %}
+
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+              <div class="col-12 col-md">
+                <!--
+                <img class="mb-2" src="icon.svg" alt="" width="24" height="24">
+                -->
+                <small class="d-block mb-3 text-muted">&copy; 2021 by danielpyon</small>
+              </div>
+              <div class="col-6 col-md">
+                <h5>Pages</h5>
+                <ul class="list-unstyled text-small">
+                  <li><a class="text-muted" href="{% url 'app:index' %}">Home</a></li>
+                  <li><a class="text-muted" href="{% url 'app:snippets' %}">Snippets</a></li>
+                  <li><a class="text-muted" href="{% url 'app:tags' %}">Tags</a></li>
+                  <li><a class="text-muted" href="{% url 'app:snippet-add' %}">New Snippet</a></li>
+                  <li><a class="text-muted" href="{% url 'app:tag-add' %}">New Tag</a></li>
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <h5>Features</h5>
+                <ul class="list-unstyled text-small">
+                  <li><a class="text-muted" href="#">Snippet saving</a></li>
+                  <li><a class="text-muted" href="#">Easy search</a></li>
+                  <li><a class="text-muted" href="#">Tagged code</a></li>
+                  <li><a class="text-muted" href="#">Save boilerplate</a></li>
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <h5>About</h5>
+                <ul class="list-unstyled text-small">
+                  <li><a class="text-muted" href="#">Information</a></li>
+                  <li><a class="text-muted" href="#">Privacy</a></li>
+                </ul>
+              </div>
+            </div>
+        </footer>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

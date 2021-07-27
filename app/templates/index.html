@@ -4,12 +4,13 @@
 
 {% block content %}
     {% if user.is_authenticated %}
+        <div class="jumbotron">
+            <h1>Home</h1>
+        </div>
         <div class="row align-items-center">
             <div class="col">
-                <ul>
-                    <li><a href="{% url 'app:snippet-add' %}">Add new snippet</a></li>
-                    <li><a href="{% url 'app:tag-add' %}">Add new tag</a></li>
-                </ul>
+                <a class="btn btn-primary" href="{% url 'app:snippet-add' %}">Add new snippet</a>
+                <a class="btn btn-primary" href="{% url 'app:tag-add' %}">Add new tag</a>
             </div>
         </div>
     {% else %}
