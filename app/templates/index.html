@@ -14,14 +14,14 @@
             </div>
         </div>
     {% else %}
+        <div class="jumbotron">
+            <h1>Welcome</h1>
+        </div>
         <div class="row align-items-center">
             <div class="col">
-
                 <p>Welcome to Recall, a programming tool that allows you to store snippets of code along with short explanations.</p>
-                <ul>
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
-                </ul>
+                <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                <a class="btn btn-primary" href="{% url 'signup' %}">Sign Up</a>
             </div>
         </div>
     {% endif %}
