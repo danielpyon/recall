@@ -118,7 +118,7 @@
         theme_list_elements,
         themes.map(x => x.caption),
         theme_menu,
-        (i) => { editor.setTheme(themes[i].theme); });
+        (i) => { editor.setTheme(themes[i].theme); localStorage.setItem('editorTheme', i); });
 
     const language_list_elements = make_list_elements(languages.length);
     fill_content_of_list_elements(
@@ -129,7 +129,12 @@
     );
 
     // Default editor theme and language
-    theme_list_elements[0].click();
+    if (localStorage.getItem('editorTheme') === null) {
+        localStorage.setItem('editorTheme', 0);
+    } else {
+        theme_list_elements[localStorage.getItem('editorTheme')].click();
+    }
+
     language_list_elements.filter(x => x.textContent == 'Text')[0].click();
 </script>
 

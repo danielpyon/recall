@@ -110,9 +110,13 @@
         theme_list_elements,
         themes.map(x => x.caption),
         theme_menu,
-        (i) => { editor.setTheme(themes[i].theme); });
+        (i) => { editor.setTheme(themes[i].theme); localStorage.setItem('editorTheme', i) });
 
-    theme_list_elements[0].click();
+    if (localStorage.getItem('editorTheme') === null) {
+        localStorage.setItem('editorTheme', 0);
+    } else {
+        theme_list_elements[localStorage.getItem('editorTheme')].click();
+    }
 </script>
 
 {% endblock %}
