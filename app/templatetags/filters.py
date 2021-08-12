@@ -17,3 +17,10 @@ def skip_n_chars(coll, n):
     Skip n chars for each str in coll
     '''
     return list(map(lambda x: x[n:], coll))
+
+@register.filter
+def is_empty(coll):
+    '''
+    Is the collection empty?
+    '''
+    return len(coll) <= 0
