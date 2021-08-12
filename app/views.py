@@ -113,9 +113,17 @@ def snippet_edit(request, pk):
 
     if form.is_valid():
         # update the old snip with form data
-        # BUG
-        for k, v in form.cleaned_data.items():
-            setattr(snippet, k, v)
+        snippet.code = form.cleaned_data['code']
+        snippet.language = form.cleaned_data['language']
+        snippet.title = form.cleaned_data['title']
+        snippet.starred = form.cleaned_data['starred']
+        snippet.description = form.cleaned_data['description']
+        
+        snippet.tags.clear()
+
+        for tag in form.cleaned_data['tags']:
+            snippet.tags.add(tag)
+        
         snippet.save()
         return HttpResponseRedirect(reverse('app:snippets'))
 
