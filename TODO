@@ -1,6 +1,10 @@
-where i left off:
-- line 24 in views.py, make sure that snippet view only shows for the right user
-- snippet_edit view (make sure to make the template have default values)
+high priority:
+    - search
+    - deletion of users
+    - edit snippets
+    - edit tags
+    - sort by date and show only certain languages
 
-what i changed:
-    - fixed tag adding (it wasn't working before)
+low priority:
+    - password reset
+    - unit tests
