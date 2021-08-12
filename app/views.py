@@ -22,6 +22,15 @@ class SnippetListView(LoginRequiredMixin, generic.ListView):
 
 class SnippetDetailView(LoginRequiredMixin, generic.DetailView):
     model = Snippet
+    
+    def get(self, request, *args, **kwargs):
+        if self.get_object().user != request.user:
+            return HttpResponse('Unauthorized', status=401)
+
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('app:index'))
+
+        return super(SnippetDetailView, self).get(request, *args, **kwargs)
 
 @login_required
 def snippet_raw(request, pk):
