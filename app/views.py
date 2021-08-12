@@ -112,10 +112,11 @@ def snippet_edit(request, pk):
     form.fields['tags'].queryset = Tag.objects.filter(user=user)
 
     if form.is_valid():
-        print(form.cleaned_data)
-        
         # update the old snip with form data
-        
+        # BUG
+        for k, v in form.cleaned_data.items():
+            setattr(snippet, k, v)
+        snippet.save()
         return HttpResponseRedirect(reverse('app:snippets'))
 
     return render(request, 'app/snippet_edit_form.html', {'form': form, 'pk': pk, 'snippet': snippet})

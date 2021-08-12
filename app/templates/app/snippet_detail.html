@@ -10,7 +10,7 @@
 <p><strong>Language:</strong> {{ snippet.language }}</p>
 <p><strong>Added:</strong> {{ snippet.pub_date }}</p>
 
-{% if not snippet.tags|is_empty %}
+{% if not snippet.tags.all|is_empty %}
 <p>
     <strong>Tags:</strong>
     {% for tag in snippet.tags.all %}
@@ -52,6 +52,10 @@
         <button class="btn-default btn" type="submit">Raw</button>
     </form>
 
+    <form style="width:250px; margin: auto;" action="{% url 'app:snippet-edit' snippet.id %}" method="GET">
+        {% csrf_token %}
+        <button class="btn btn-default btn-lg btn-block" type="submit">Edit</button>
+    </form>
     <br>
     <form style="width:250px; margin: auto;" action="{% url 'app:snippet-delete' snippet.id %}" method="GET">
         {% csrf_token %}
