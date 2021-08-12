@@ -1,0 +1,6 @@
+where i left off:
+- line 24 in views.py, make sure that snippet view only shows for the right user
+- snippet_edit view (make sure to make the template have default values)
+
+what i changed:
+    - fixed tag adding (it wasn't working before)

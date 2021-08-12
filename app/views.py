@@ -26,6 +26,10 @@ class SnippetDetailView(LoginRequiredMixin, generic.DetailView):
 @login_required
 def snippet_raw(request, pk):
     snippet = get_object_or_404(Snippet, pk=pk)
+
+    if request.user != snippet.user:
+        return HttpResponse('Unauthorized', status=401)
+    
     resp = HttpResponse(snippet.code, content_type='text/plain')
     return resp
 
@@ -38,6 +42,9 @@ def snippet_delete(request, pk):
 def tag(request, pk):
     tag = get_object_or_404(Tag, pk=pk)
     
+    if request.user != tag.user:
+        return HttpResponse('Unauthorized', status=401)
+
     snippets = Snippet.objects.filter(
         tags=tag,
         user=request.user
@@ -51,6 +58,10 @@ def tag(request, pk):
 
 @login_required
 def tag_delete(request, pk):
+    user = Tag.objects.filter(pk=pk).user
+    if request.user != user:
+        return HttpResponse('Unauthorized', status=401)
+
     Tag.objects.filter(pk=pk).delete()
     return HttpResponseRedirect(reverse('app:tags'))
 
@@ -71,9 +82,34 @@ def snippet_add(request):
         snip = form.save(commit=False)
         snip.user = request.user
         snip.save()
+    
+        for tag in form.cleaned_data['tags']:
+            snip.tags.add(tag)
+
+        snip.save()
         return HttpResponseRedirect(reverse('app:snippets'))
 
     return render(request, 'app/snippet_form.html', {'form': form})
+
+@login_required
+def snippet_edit(request, pk):
+    snippet = get_object_or_404(Snippet, pk=pk)
+
+    if request.user != snippet.user:
+        return HttpResponse('Unauthorized', status=401)
+
+    form = SnippetForm(request.POST or None)
+    user = request.user
+    form.fields['tags'].queryset = Tag.objects.filter(user=user)
+
+    if form.is_valid():
+        print(form.cleaned_data)
+        
+        # update the old snip with form data
+        
+        return HttpResponseRedirect(reverse('app:snippets'))
+
+    return render(request, 'app/snippet_edit_form.html', {'form': form, 'pk': pk, 'snippet': snippet})
 
 @login_required
 def tag_add(request):
