@@ -67,7 +67,7 @@ def tag(request, pk):
 
 @login_required
 def tag_delete(request, pk):
-    user = Tag.objects.filter(pk=pk).user
+    user = Tag.objects.get(pk=pk).user
     if request.user != user:
         return HttpResponse('Unauthorized', status=401)
 

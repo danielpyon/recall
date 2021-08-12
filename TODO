@@ -1,8 +1,6 @@
 high priority:
     - search
     - deletion of users
-    - edit snippets
-        - bug in line 116 of views.py while updating old snippet
     - edit tags
     - sort by date and show only certain languages
 
