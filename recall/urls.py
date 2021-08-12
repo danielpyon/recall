@@ -14,18 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, reverse
 from django.views.generic import RedirectView
 from django.shortcuts import redirect
-from django.contrib.auth.views import LoginView
+from django.http import HttpResponseRedirect
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
 from django.utils.decorators import method_decorator
-from .views import SignupFormView
+from .views import SignupFormView, AnonOnlyMixin
+
+class FixedPasswordResetView(AnonOnlyMixin, PasswordResetView):
+    pass
+
+class FixedPasswordResetConfirmView(AnonOnlyMixin, PasswordResetConfirmView):
+    pass
 
 urlpatterns = [
     path('', RedirectView.as_view(url='app/', permanent=True), name='app'),
     path('app/', include('app.urls')),
     path('accounts/signup/', SignupFormView.as_view(), name='signup'),
+
+    # accessible only to anons
     path('accounts/login/', LoginView.as_view(redirect_authenticated_user=True)),
+    path('accounts/password_reset/', FixedPasswordResetView.as_view()),
+    path('accounts/password_confirm/', FixedPasswordResetConfirmView.as_view()),
+    
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ]
