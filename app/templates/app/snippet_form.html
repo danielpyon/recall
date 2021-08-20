@@ -42,7 +42,7 @@
 
 <div id="editor" style="height: 500px; width: 100%;"></div>
 
-<form action="{% url 'app:snippet-add' %}" method="post" novalidate>
+<form style="margin-bottom: 10px;" action="{% url 'app:snippet-add' %}" method="post" novalidate>
     {% csrf_token %}
     <span style="display: none;">{{ form.code }}</span>
     <span style="display: none;">{{ form.language }}</span>
@@ -62,6 +62,8 @@
         <input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">
     </div>
 </form>
+
+<br>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ext-modelist.min.js" integrity="sha512-DVhsjVBjwWmU6Tb43nTK5ZhIUVdwOEiKPm8KTk3pE28oN/ZUGCJm7ufcUZq8yo2uYFkNfPZ9aed16cAKEj/2gw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
