@@ -15,7 +15,7 @@ def index(request):
 
 class SnippetListView(LoginRequiredMixin, generic.ListView):
     model = Snippet
-    paginate_by = 20
+    paginate_by = 18
 
     def get_queryset(self):
         return Snippet.objects.filter(user=self.request.user).order_by('-pub_date')

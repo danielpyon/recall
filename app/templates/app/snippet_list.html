@@ -6,18 +6,17 @@
     </div>
 
     {% if snippet_list %}
-    <ul>
-
+    <div class="card-columns" style="margin-bottom: 10px;">
       {% for snippet in snippet_list %}
-      <li>
-        <a href="{{ snippet.get_absolute_url }}">{{ snippet.title }}</a>
-        {% if snippet.language %}
-        ({{ snippet.language }}, {{ snippet.loc }} lines)
-        {% endif %}
-      </li>
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title"><a href="{{ snippet.get_absolute_url }}">{{ snippet.title }}</a></h5>
+          <p class="card-text">{{ snippet.description }}</p>
+          <p class="card-text"><small class="text-muted">{{ snippet.pub_date }}</small></p>
+        </div>
+      </div>
       {% endfor %}
-
-    </ul>
+    </div>
 
     {% else %}
       <p>There are no snippets saved.</p>
