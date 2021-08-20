@@ -6,11 +6,6 @@ from django.contrib.auth.models import User
 import datetime
 from .models import Snippet, Tag
 
-'''
-To test:
-    - Deleting a tag doesn't delete the snippets associated with it
-'''
-
 def create_snippet(**info):
     time = timezone.now()
     return Snippet.objects.create(**info, pub_date=time)
