@@ -10,7 +10,10 @@
 
       {% for snippet in snippet_list %}
       <li>
-        <a href="{{ snippet.get_absolute_url }}">{{ snippet.title }}</a> ({{ snippet.language }}, {{ snippet.loc }} lines)
+        <a href="{{ snippet.get_absolute_url }}">{{ snippet.title }}</a>
+        {% if snippet.language %}
+        ({{ snippet.language }}, {{ snippet.loc }} lines)
+        {% endif %}
       </li>
       {% endfor %}
 
