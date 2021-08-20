@@ -1,15 +1,24 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.utils import timezone
-import datetime
+from django.urls import reverse
+from django.contrib.auth.models import User
 
+import datetime
 from .models import Snippet, Tag
 
+'''
 def create_snippet(code, user, ):
     time = timezone.now()
     return Snippet.objects.create(
         code=code
         pub_date=time
     )
+'''
+
+class IndexViewTests(TestCase):
+    def test_pagination(self):
+        response = self.client.get(reverse('app:index'))
+        self.assertEqual(response.status_code, 200)
 
 """
 def create_question(question_text, days):
@@ -75,3 +84,9 @@ class QuestionDetailViewTests(TestCase):
         response=self.client.get(url)
         self.assertContains(response, past_question.question_text)
 """
+
+'''
+To test:
+    - Pagination
+    - Deleting a tag doesn't delete the snippets associated with it
+'''
