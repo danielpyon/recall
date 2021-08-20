@@ -2,7 +2,7 @@ high priority:
     - search
     - deletion of users
     - edit tags
-    - sort by date and show only certain languages
+    - sort by date, name and show only certain languages
 
 low priority:
     - password reset

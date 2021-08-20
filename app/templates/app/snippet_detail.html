@@ -58,6 +58,7 @@
         {% csrf_token %}
         <button class="btn-default btn" type="submit">Raw</button>
     </form>
+    <br>
 
     <form style="width:250px; margin: auto;" action="{% url 'app:snippet-edit' snippet.id %}" method="GET">
         {% csrf_token %}
