@@ -16,7 +16,23 @@ def create_snippet(code, user, ):
 '''
 
 class IndexViewTests(TestCase):
-    pass
+    def test_page_no_login(self):
+        response = self.client.get(reverse('app:index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Welcome to Recall, a programming tool that allows you to store snippets of code along with short explanations.')
+    def test_page_login(self):
+        pass
+
+class LoginTest(TestCase):
+    def setUp(self):
+        self.credentials = {
+            'username': 'testuser',
+            'password': 'pass6974'
+        }
+        User.objects.create_user(**self.credentials)
+    def test_login(self):
+        response = self.client.post('/accounts/login/', self.credentials, follow=True)
+        self.assertTrue(response.context['user'].is_active)
 
 """
 def create_question(question_text, days):
