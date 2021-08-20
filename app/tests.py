@@ -15,14 +15,39 @@ def create_snippet(code, user, ):
     )
 '''
 
+
+'''
+To test:
+    - Deleting a tag doesn't delete the snippets associated with it
+'''
+
 class IndexViewTests(TestCase):
     def test_page_no_login(self):
         response = self.client.get(reverse('app:index'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Welcome to Recall, a programming tool that allows you to store snippets of code along with short explanations.')
     def test_page_login(self):
-        pass
+        self.credentials = {
+            'username': 'testuser',
+            'password': 'pass6974'
+        }
+        User.objects.create_user(**self.credentials)
+        response = self.client.post('/accounts/login/', self.credentials, follow=True)
+        self.assertTrue(response.context['user'].is_active)
 
+        response = self.client.get(reverse('app:index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Add new snippet')
+
+class TagDetailViewTests(TestCase):
+    def setUp(self):
+        self.credentials = {
+            'username': 'testuser',
+            'password': 'pass6974'
+        }
+        User.objects.create_user(**self.credentials)
+    
+    
 class LoginTest(TestCase):
     def setUp(self):
         self.credentials = {
@@ -98,9 +123,3 @@ class QuestionDetailViewTests(TestCase):
         response=self.client.get(url)
         self.assertContains(response, past_question.question_text)
 """
-
-'''
-To test:
-    - Pagination
-    - Deleting a tag doesn't delete the snippets associated with it
-'''
