@@ -16,9 +16,7 @@ def create_snippet(code, user, ):
 '''
 
 class IndexViewTests(TestCase):
-    def test_pagination(self):
-        response = self.client.get(reverse('app:index'))
-        self.assertEqual(response.status_code, 200)
+    pass
 
 """
 def create_question(question_text, days):

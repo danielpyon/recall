@@ -7,8 +7,13 @@
     <h1>{{ snippet.title }}</h1>
 </div>
 
+{% if snippet.language %}
 <p><strong>Language:</strong> {{ snippet.language }}</p>
+{% endif %}
+
+{% if snippet.pub_date %}
 <p><strong>Added:</strong> {{ snippet.pub_date }}</p>
+{% endif %}
 
 {% if not snippet.tags.all|is_empty %}
 <p>
@@ -27,8 +32,10 @@
 <hr>
 
 <div>
-    <h3>Description</h3>
-    <p>{{ snippet.description }}</p>
+    {% if snippet.description %}
+        <h3>Description</h3>
+        <p>{{ snippet.description }}</p>
+    {% endif %}
 
     <br>
     <h3>Code</h3>
