@@ -7,19 +7,16 @@ import datetime
 from .models import Snippet, Tag
 
 '''
-def create_snippet(code, user, ):
-    time = timezone.now()
-    return Snippet.objects.create(
-        code=code
-        pub_date=time
-    )
-'''
-
-
-'''
 To test:
     - Deleting a tag doesn't delete the snippets associated with it
 '''
+
+def create_snippet(**info):
+    time = timezone.now()
+    return Snippet.objects.create(**info, pub_date=time)
+
+# testing account
+USER, PASS = 'testuser', 'pass6974'
 
 class IndexViewTests(TestCase):
     def test_page_no_login(self):
@@ -28,12 +25,12 @@ class IndexViewTests(TestCase):
         self.assertContains(response, 'Welcome to Recall, a programming tool that allows you to store snippets of code along with short explanations.')
     def test_page_login(self):
         self.credentials = {
-            'username': 'testuser',
-            'password': 'pass6974'
+            'username': USER,
+            'password': PASS
         }
         User.objects.create_user(**self.credentials)
         response = self.client.post('/accounts/login/', self.credentials, follow=True)
-        self.assertTrue(response.context['user'].is_active)
+        self.assertTrue(response.context['user'].is_authenticated)
 
         response = self.client.get(reverse('app:index'))
         self.assertEqual(response.status_code, 200)
@@ -42,17 +39,45 @@ class IndexViewTests(TestCase):
 class TagDetailViewTests(TestCase):
     def setUp(self):
         self.credentials = {
-            'username': 'testuser',
-            'password': 'pass6974'
+            'username': USER,
+            'password': PASS
         }
-        User.objects.create_user(**self.credentials)
-    
-    
+        self.user = User.objects.create_user(**self.credentials)
+    def test_deletion_of_tag_does_not_delete_snippets(self):
+        # create snippets
+        code = '''
+        (defun doors (n)
+            (loop for a from 1 to n collect
+                (zerop (mod (sqrt a) 1))))
+        '''
+
+        tags = [
+            Tag.objects.create(tag_type='algorithms', user=self.user),
+            Tag.objects.create(tag_type='functional', user=self.user),
+        ]
+
+        snip = create_snippet(
+            user=self.user,
+            code=code,
+            language='lisp',
+            title='doors problem',
+            description='doors problem in lisp',
+            starred=True,
+        )
+
+        for tag in tags:
+            snip.tags.add(tag)
+
+        tags[0].delete()
+        self.assertEqual(Snippet.objects.all().count(), 1)
+        tags[1].delete()
+        self.assertEqual(Snippet.objects.all().count(), 1)
+
 class LoginTest(TestCase):
     def setUp(self):
         self.credentials = {
-            'username': 'testuser',
-            'password': 'pass6974'
+            'username': USER,
+            'password': PASS
         }
         User.objects.create_user(**self.credentials)
     def test_login(self):
