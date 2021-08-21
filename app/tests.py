@@ -77,7 +77,20 @@ class LoginTest(TestCase):
         User.objects.create_user(**self.credentials)
     def test_login(self):
         response = self.client.post('/accounts/login/', self.credentials, follow=True)
-        self.assertTrue(response.context['user'].is_active)
+        self.assertTrue(response.context['user'].is_authenticated)
+
+class SettingsViewTest(TestCase):
+    def setUp(self):
+        self.credentials = {
+            'username': USER,
+            'password': PASS
+        }
+        User.objects.create_user(**self.credentials)
+    def test_user_deletion(self):
+        response = self.client.post('/accounts/login/', self.credentials, follow=True)
+        self.assertTrue(response.context['user'].is_authenticated)
+        response = self.client.post('/app/settings', self.credentials, follow=True)
+        self.assertFalse(response.context['user'].is_active)
 
 """
 def create_question(question_text, days):

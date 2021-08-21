@@ -140,3 +140,12 @@ def tag_add(request):
         return HttpResponseRedirect(reverse('app:tags'))
 
     return render(request, 'app/tag_form.html', {'form': form})
+
+@login_required
+def settings_view(request):
+    if request.method == 'POST':
+        # delete account
+        request.user.delete()
+        return HttpResponseRedirect(reverse('logout'))
+    else:
+        return render(request, 'app/settings.html', { 'user': request.user })
