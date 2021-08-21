@@ -7,3 +7,4 @@ high priority:
 low priority:
     - password reset
     - unit tests
+    - add <hr> in signup.html between form and errors

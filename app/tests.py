@@ -85,11 +85,13 @@ class SettingsViewTest(TestCase):
             'username': USER,
             'password': PASS
         }
-        User.objects.create_user(**self.credentials)
+        self.user = User.objects.create_user(**self.credentials)
     def test_user_deletion(self):
         response = self.client.post('/accounts/login/', self.credentials, follow=True)
         self.assertTrue(response.context['user'].is_authenticated)
-        response = self.client.post('/app/settings', self.credentials, follow=True)
+
+        response = self.client.post(reverse('app:settings'), self.credentials, follow=True)
+        self.assertEquals(response.status_code, 200)
         self.assertFalse(response.context['user'].is_active)
 
 """

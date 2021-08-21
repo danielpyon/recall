@@ -9,11 +9,24 @@
 <div>
     <h1>Account</h1>
 
-    <form action="{% url 'app:settings' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit">Delete my account</button>
-    </form>
+    <button type="submit" onclick="warning()">Delete my account</button>
 </div>
 
-{% endblock %}
+<script>
+    function warning() {
+        const url = '{% url "app:settings" %}';
+        const result = confirm('Are you SURE you want to delete your account?');
+        if (result) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = () => {
+                // redirect
+                window.location.replace('{% url "app:index" %}');
+            };
+            xhr.send('csrfmiddlewaretoken={{ csrf_token }}');
+        }
+    }
+</script>
 
+{% endblock %}
