@@ -1,10 +1,8 @@
 high priority:
-    - search
-    - deletion of users
-    - edit tags
     - sort by date, name and show only certain languages
+    - search
+    - edit tags
 
 low priority:
     - password reset
-    - unit tests
     - add <hr> in signup.html between form and errors
