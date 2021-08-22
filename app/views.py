@@ -32,6 +32,13 @@ class SnippetDetailView(LoginRequiredMixin, generic.DetailView):
 
         return super(SnippetDetailView, self).get(request, *args, **kwargs)
 
+class SnippetSearchListView(LoginRequiredMixin, generic.ListView):
+    model = Snippet
+    paginate_by = 18
+    
+    def get_queryset(self):
+        return Snippet.objects.filter(user=self.request.user, title__icontains=self.kwargs['query']).order_by('-pub_date')
+
 @login_required
 def snippet_raw(request, pk):
     snippet = get_object_or_404(Snippet, pk=pk)

@@ -1,6 +1,9 @@
 high priority:
     - sort by date, name and show only certain languages
     - search
+        - when user types "search" it takes them to /snippet/search?query=some_text
+        - the search results include all snippets that contain the query in the title
+        - use trigam similarity
     - edit tags
 
 low priority:
