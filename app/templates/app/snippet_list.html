@@ -9,9 +9,19 @@
     <div class="card-columns" style="margin-bottom: 10px;">
       {% for snippet in snippet_list %}
       <div class="card text-center">
+        {% if snippet.starred %}
+        <p style="position: absolute; right: 15px; top: 0px; font-size: 30px;">&#9733;</p>
+        {% endif %}
         <div class="card-body">
           <h5 class="card-title"><a href="{{ snippet.get_absolute_url }}">{{ snippet.title }}</a></h5>
-          <p class="card-text">{{ snippet.description }}</p>
+          <p class="card-text">
+            ({{ snippet.language }},
+            {% if snippet.loc == 1 %}
+            1 line)
+            {% else %}
+            {{ snippet.loc }} lines)
+            {% endif %}
+          </p>
           <p class="card-text"><small class="text-muted">{{ snippet.pub_date }}</small></p>
         </div>
       </div>
