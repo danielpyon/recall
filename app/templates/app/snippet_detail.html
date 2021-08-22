@@ -27,7 +27,9 @@
 </p>
 {% endif %}
 
-<p><strong>Starred?</strong> {% if snippet.starred %} &#9733; {% else %} &#9734; {% endif %}</p>
+{% if snippet.starred %}
+<p><strong>Starred?</strong> &#9734;</p>
+{% endif %}
 
 <hr>
 
