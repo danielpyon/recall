@@ -36,8 +36,12 @@ class SnippetSearchListView(LoginRequiredMixin, generic.ListView):
     model = Snippet
     paginate_by = 18
     
+    # NOTE: this uses the "snippet_list" template
+    
     def get_queryset(self):
-        return Snippet.objects.filter(user=self.request.user, title__icontains=self.kwargs['query']).order_by('-pub_date')
+        if 'query' in self.kwargs:
+            return Snippet.objects.filter(user=self.request.user, title__icontains=self.kwargs['query']).order_by('-pub_date')
+        return Snippet.objects.filter(user=self.request.user)
 
 @login_required
 def snippet_raw(request, pk):
@@ -87,6 +91,17 @@ class TagListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Tag.objects.filter(user=self.request.user).order_by('tag_type') # alphabetical
+
+class TagSearchListView(LoginRequiredMixin, generic.ListView):
+    model = Tag
+    paginate_by = 18
+
+    # NOTE: this uses the "tag_list" template
+
+    def get_queryset(self):
+        if 'query' in self.kwargs:
+            return Tag.objects.filter(user=self.request.user, tag_type__icontains=self.kwargs['query']).order_by('tag_type')
+        return Tag.objects.filter(user=self.request.user)
 
 @login_required
 def snippet_add(request):

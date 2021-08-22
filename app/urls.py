@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('snippets/', views.SnippetListView.as_view(), name='snippets'),
     path('snippets/search/<str:query>', views.SnippetSearchListView.as_view(), name='snippet-search'),
+    path('snippets/search', views.SnippetSearchListView.as_view(), name='snippet-search'),
     path('snippet/<uuid:pk>', views.SnippetDetailView.as_view(), name='snippet-detail'),
     path('snippet/<uuid:pk>/raw', views.snippet_raw, name='snippet-raw'),
     path('snippet/<uuid:pk>/delete', views.snippet_delete, name='snippet-delete'),
@@ -18,5 +19,7 @@ urlpatterns = [
     path('tag/add', views.tag_add, name='tag-add'),
     path('tags/', views.TagListView.as_view(), name='tags'),
     path('tags/<int:pk>/edit', views.tag_edit , name='tag-edit'),
+    path('tags/search/<str:query>', views.TagSearchListView.as_view(), name='tag-search'),
+    path('tags/search', views.TagSearchListView.as_view(), name='tag-search'),
     path('settings/', views.settings_view, name='settings'),
 ]
