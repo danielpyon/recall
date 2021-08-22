@@ -4,6 +4,8 @@ high priority:
     - sort by date, name and show only certain languages
     - team functionality
     - add tags in the snippet form
+    - pagination in tag_detail.html
+    - only display "starred" if it is
 
 low priority:
     - stats about code in /index

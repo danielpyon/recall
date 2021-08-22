@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.core.paginator import Paginator
 
 from .models import Tag, Snippet
 from .forms import SnippetForm, TagForm
@@ -70,9 +71,14 @@ def tag(request, pk):
         user=request.user
     ).distinct()
 
+    paginator = Paginator(snippets, 25)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'tag': tag,
-        'snippets': snippets
+        'snippets': snippets,
+        'page_obj': page_obj
     }
     return render(request, 'app/tag_detail.html', context)
 
