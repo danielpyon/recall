@@ -1,8 +1,7 @@
 high priority:
     - use select box in snippet_form, not dropdown
     - display language and LOC in the snippet list
-    - sort by date, name and show only certain languages or starred
-    - team functionality
+    - [adv search] sort by date, name and show only certain languages or starred
     - add tags in the snippet form
 
 low priority:
