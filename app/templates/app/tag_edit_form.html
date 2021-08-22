@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Edit Tag</h1>
+</div>
+
+<form action="{% url 'app:tag-edit' pk %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Update">
+</form>
+
+<script>
+    const tag_input = document.getElementById('id_tag_type');
+    tag_input.value = '{{ tag.tag_type }}';
+</script>
+
+{% endblock %}
+

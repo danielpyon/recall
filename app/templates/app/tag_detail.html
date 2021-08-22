@@ -8,10 +8,15 @@
 </div>
 
 <div>
-    <form action="{% url 'app:tag-delete' tag.id %}" method="GET">
+    <form style="display: inline;" action="{% url 'app:tag-delete' tag.id %}" method="GET">
         {% csrf_token %}
         <button type="submit">Delete</button>
     </form>
+    <form style="display: inline;" action="{% url 'app:tag-edit' tag.id %}" method="GET">
+        {% csrf_token %}
+        <button type="submit">Edit</button>
+    </form>
+    <br>
     <br>
     <ul>
         {% for snippet in snippets %}

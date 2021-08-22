@@ -1,7 +1,10 @@
 high priority:
     - sort by date, name and show only certain languages
     - edit tags
-
+        - similar idea as editing snippets
+    - team functionality
+    - fix the hack in snippet_edit_form
+    - add tags in the snippet form
 low priority:
     - password reset
     - add <hr> in signup.html between form and errors

@@ -149,6 +149,24 @@ def tag_add(request):
     return render(request, 'app/tag_form.html', {'form': form})
 
 @login_required
+def tag_edit(request, pk):
+    tag = get_object_or_404(Tag, pk=pk)
+
+    if request.user != tag.user:
+        return HttpResponse('Unauthorized', status=401)
+
+    form = TagForm(request.POST or None)
+    user = request.user
+
+    if form.is_valid():
+        tag.tag_type = form.cleaned_data['tag_type']
+        tag.save()
+        return HttpResponseRedirect(reverse('app:tags'))
+
+    return render(request, 'app/tag_edit_form.html', {'form': form, 'pk': pk, 'tag': tag})
+
+
+@login_required
 def settings_view(request):
     if request.method == 'POST':
         # delete account

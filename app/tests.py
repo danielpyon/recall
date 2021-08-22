@@ -6,6 +6,11 @@ from django.contrib.auth.models import User
 import datetime
 from .models import Snippet, Tag
 
+'''
+    To test:
+        - logged in users cannot view other users' pages
+'''
+
 def create_snippet(**info):
     time = timezone.now()
     return Snippet.objects.create(**info, pub_date=time)
