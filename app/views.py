@@ -83,10 +83,10 @@ def tag_delete(request, pk):
 
 class TagListView(LoginRequiredMixin, generic.ListView):
     model = Tag
-    paginate_by = 10
+    paginate_by = 18
 
     def get_queryset(self):
-        return Tag.objects.filter(user=self.request.user)
+        return Tag.objects.filter(user=self.request.user).order_by('tag_type') # alphabetical
 
 @login_required
 def snippet_add(request):

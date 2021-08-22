@@ -14,6 +14,9 @@ class Tag(models.Model):
     def get_absolute_url(self):
         return reverse('app:tag-detail', args=[str(self.id)])
 
+    def count(self):
+        return Snippet.objects.filter(user=self.user, tags=self).distinct().count()
+
     def __str__(self):
         return f'Tag "{self.tag_type}"'
 

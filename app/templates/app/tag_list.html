@@ -7,16 +7,21 @@
 
     {% if tag_list %}
     <ul>
-
       {% for tag in tag_list %}
       <li>
-        <a href="{{ tag.get_absolute_url }}">{{ tag.tag_type }}</a>
+        <a href="{{ tag.get_absolute_url }}">
+          {{ tag.tag_type }}
+          {% if tag.count == 1 %}
+          ({{ tag.count }} snippet)
+          {% else %}
+          ({{ tag.count }} snippets)
+          {% endif %}
+        </a>
       </li>
       {% endfor %}
-
     </ul>
 
     {% else %}
-      <p>There are no tags.</p>
+      <p>No tags found!</p>
     {% endif %}       
 {% endblock %}

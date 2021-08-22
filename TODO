@@ -1,9 +1,12 @@
 high priority:
+    - use select box in snippet_form, not dropdown
+    - display language and LOC in the snippet list
     - sort by date, name and show only certain languages
     - team functionality
-    - fix the hack in snippet_edit_form
     - add tags in the snippet form
 
 low priority:
+    - stats about code in /index
+    - deploy
     - password reset
     - add <hr> in signup.html between form and errors
