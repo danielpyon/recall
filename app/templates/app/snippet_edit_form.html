@@ -44,8 +44,6 @@
 
 <!-- less hack -->
 <div id="snippet" style="display: none;">
-    <div id="snip_code">{{ snippet.code }}</div>
-    <div id="snip_language">{{ snippet.language }}</div>
     <div id="snip_tags">
         {% for tag in snippet.tags.all %}
             <div>{{ tag }}</div>
@@ -94,9 +92,9 @@
         txt.value = editor.getSession().getValue();
     });
     const snippet = document.getElementById('snippet').children;
-    const code = snippet[0].textContent;
-    const lang = snippet[1].textContent;
-    const tags = snippet[2].children;
+    const code = {{ code|safe }};
+    const lang = {{ language|safe }};
+    const tags = snippet[0].children;
 
     editor.getSession().setValue(code);
     txt.value = code;
@@ -153,8 +151,13 @@
     } else {
         theme_list_elements[localStorage.getItem('editorTheme')].click();
     }
-
-    language_list_elements.filter(x => x.textContent.toLowerCase() == lang.toLowerCase())[0].click();
+    
+    try {
+        language_list_elements.filter(x => x.textContent.toLowerCase() == lang.toLowerCase())[0].click();
+    } catch(e) {
+        console.log(e);
+        language_list_elements.filter(x => x.textContent.toLowerCase() == 'text')[0].click();
+    }
 
     const title_input = document.getElementById('id_title');
     title_input.value = '{{ snippet.title }}';

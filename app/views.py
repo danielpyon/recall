@@ -177,7 +177,15 @@ def snippet_edit(request, pk):
         snippet.save()
         return HttpResponseRedirect(reverse('app:snippets'))
 
-    return render(request, 'app/snippet_edit_form.html', {'form': form, 'pk': pk, 'snippet': snippet})
+    context = {
+        'form': form,
+        'pk': pk,
+        'snippet': snippet,
+        #'tags': json.dumps(list(map(lambda x: x.tag_type, snippet.tags.all()))),
+        'language': json.dumps(snippet.language),
+        'code': json.dumps(snippet.code),
+    }
+    return render(request, 'app/snippet_edit_form.html', context)
 
 @login_required
 def tag_add(request):
