@@ -85,6 +85,10 @@
     const code = document.getElementById('metadata-code').innerText;
     const lang = document.getElementById('metadata-language').innerText;
 
+    editor.setOptions({
+        fontSize: "13pt"
+    });
+
     editor.session.setMode('ace/mode/' + lang);
     editor.setValue(code, 1);
     editor.clearSelection();

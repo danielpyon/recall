@@ -87,6 +87,10 @@
     const themes = ace.require('ace/ext/themelist').themes;
     const languages = ace.require('ace/ext/modelist').modes;
 
+    editor.setOptions({
+        fontSize: "13pt"
+    });
+
     // Set the textarea to whatever's in the editor    
     editor.getSession().on('change', () => {
         txt.value = editor.getSession().getValue();
