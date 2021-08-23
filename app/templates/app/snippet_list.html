@@ -6,9 +6,8 @@
     </div>
 
     {% if snippet_list %}
-    <div class="card-columns" style="margin-bottom: 10px;">
       {% for snippet in snippet_list %}
-      <div class="card text-center">
+      <div class="card text-center" style="margin-bottom: 15px;">
         {% if snippet.starred %}
         <p style="position: absolute; right: 15px; top: 0px; font-size: 30px;">&#9733;</p>
         {% endif %}
@@ -26,8 +25,6 @@
         </div>
       </div>
       {% endfor %}
-    </div>
-
     {% else %}
       <p>No snippets found!</p>
     {% endif %}
