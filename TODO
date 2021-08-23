@@ -1,11 +1,11 @@
 high priority:
-    - use select box in snippet_form, not dropdown
-    - display language and LOC in the snippet list
     - [adv search] sort by date, name and show only certain languages or starred
-    - add tags in the snippet form
+    - stats about code in /index + starred
+    - less hack
 
 low priority:
-    - stats about code in /index
-    - deploy
-    - password reset
-    - add <hr> in signup.html between form and errors
+    - [ui] add tags in the snippet form
+    - [ui] use select box in snippet_form, not dropdown
+    - [admin] deploy
+    - [auth] password reset
+    - [ui] add <hr> in signup.html between form and errors

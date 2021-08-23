@@ -10,8 +10,30 @@ from django.core.paginator import Paginator
 
 from .models import Tag, Snippet
 from .forms import SnippetForm, TagForm
+from .utils import language_counts
+
+import json
+
 
 def index(request):
+    if request.user.is_authenticated:
+        context = dict()
+
+        counts = []
+        for k, v in language_counts().items():
+            counts.append([k, v])
+        if len(counts) >= 1:
+            context['counts'] = json.dumps(counts)
+
+        most_recent = Snippet.objects.order_by('-pub_date')[:6]
+        if len(most_recent) >= 1:
+            context['recent'] = most_recent
+        
+        most_recent_starred = Snippet.objects.filter(starred=True).order_by('-pub_date')[:6]
+        if len(most_recent_starred) >= 1:
+            context['starred'] = most_recent_starred
+
+        return render(request, 'index.html', context)
     return render(request, 'index.html')
 
 class SnippetListView(LoginRequiredMixin, generic.ListView):
