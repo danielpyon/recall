@@ -153,9 +153,12 @@
     }
     
     try {
-        language_list_elements.filter(x => x.textContent.toLowerCase() == lang.toLowerCase())[0].click();
+        languages.filter(x => x.caption)
+        // lang is "c_cpp" but the other thing is "C and C++"
+        const caption = languages.filter(x => x.name === lang.toLowerCase())[0].caption;
+        
+        language_list_elements.filter(x => x.textContent.toLowerCase() == caption.toLowerCase())[0].click();
     } catch(e) {
-        console.log(e);
         language_list_elements.filter(x => x.textContent.toLowerCase() == 'text')[0].click();
     }
 

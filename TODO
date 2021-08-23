@@ -1,7 +1,5 @@
 high priority:
     - [adv search] sort by date, name and show only certain languages or starred
-    - stats about code in /index + starred
-    - less hack
 
 low priority:
     - [ui] add tags in the snippet form
