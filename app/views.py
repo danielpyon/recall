@@ -20,16 +20,16 @@ def index(request):
         context = dict()
 
         counts = []
-        for k, v in language_counts().items():
+        for k, v in language_counts(request.user).items():
             counts.append([k, v])
         if len(counts) >= 1:
             context['counts'] = json.dumps(counts)
 
-        most_recent = Snippet.objects.order_by('-pub_date')[:6]
+        most_recent = Snippet.objects.filter(user=request.user).order_by('-pub_date')[:6]
         if len(most_recent) >= 1:
             context['recent'] = most_recent
         
-        most_recent_starred = Snippet.objects.filter(starred=True).order_by('-pub_date')[:6]
+        most_recent_starred = Snippet.objects.filter(user=request.user, starred=True).order_by('-pub_date')[:6]
         if len(most_recent_starred) >= 1:
             context['starred'] = most_recent_starred
 
