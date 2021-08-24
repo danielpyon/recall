@@ -8,3 +8,5 @@ low priority:
     - [admin] deploy
     - [auth] password reset
     - [ui] add <hr> in signup.html between form and errors
+    - [ui] weird issue with 100vw in base_generic.html
+    - [adv search] - blank queries trigger an error
