@@ -107,9 +107,9 @@
         let i = 0;
         for (const [k, v] of Object.entries(this.parameters)) {
           if (i === 0) {
-            ret += '?' + k + '=' + v;
+            ret += `?${k}=${v}`;
           } else {
-            ret += '&' + k + '=' + v;
+            ret += `&${k}=${v}`;
           }
           i++;
         }
