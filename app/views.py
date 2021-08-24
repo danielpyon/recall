@@ -59,12 +59,28 @@ class SnippetAdvancedSearchListView(LoginRequiredMixin, generic.ListView):
     model = Snippet
     paginate_by = 18
 
+    def get_or_none(self, key):
+        try:
+            return self.request.GET[key]
+        except:
+            return None
+
     def get_queryset(self):
-        print()
-        print(self.kwargs)
-        print(self.request.GET['from'])
-        print()
-        return Snippet.objects.all()
+        query = ''
+        if 'query' in self.kwargs:
+            query = self.kwargs['query']
+
+        start = self.get_or_none('from')
+        end = self.get_or_none('to')
+
+        args = {
+            'user': self.request.user,
+            'title__icontains': query,
+        }
+        if start is not None and end is not None:
+            args['pub_date__range'] = [str(start), str(end)]
+        
+        return Snippet.objects.filter(**args)
 
 class SnippetSearchListView(LoginRequiredMixin, generic.ListView):
     model = Snippet
