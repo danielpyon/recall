@@ -24,3 +24,9 @@ def is_empty(coll):
     Is the collection empty?
     '''
     return len(coll) <= 0
+
+@register.simple_tag
+def url_replace(request, field, value):
+    dict_ = request.GET.copy()
+    dict_[field] = value
+    return dict_.urlencode()

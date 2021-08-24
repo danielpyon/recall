@@ -9,6 +9,7 @@ urlpatterns = [
     path('snippets/', views.SnippetListView.as_view(), name='snippets'),
     path('snippets/search/<str:query>', views.SnippetSearchListView.as_view(), name='snippet-search'),
     path('snippets/search/advanced/<str:query>', views.SnippetAdvancedSearchListView.as_view(), name='snippet-advanced-search'),
+    path('snippets/search/advanced/', views.SnippetAdvancedSearchListView.as_view(), name='snippet-advanced-search'),
     path('snippets/search', views.SnippetSearchListView.as_view(), name='snippet-search'),
     path('snippet/<uuid:pk>', views.SnippetDetailView.as_view(), name='snippet-detail'),
     path('snippet/<uuid:pk>/raw', views.snippet_raw, name='snippet-raw'),

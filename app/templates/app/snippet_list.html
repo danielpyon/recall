@@ -120,9 +120,6 @@
 
       function adv_search_req() {
         const query = document.getElementById('advsearchbox').value;
-        if (query === '') {
-            return;
-        }
         let url = '{% url "app:snippet-advanced-search" "tmp" %}'.replace(/tmp/, query);
         let qp = new QueryParameter(url);
         qp.add('from', start_date.value);
