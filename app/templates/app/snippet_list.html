@@ -38,7 +38,7 @@
         <br>
         
         <h3>Starred</h3>
-        <input type="checkbox" style="width: 20px; height: 20px;" id="starred" value="starred">
+        <input type="checkbox" style="width: 20px; height: 20px;" id="starred">
         <br>
         
         <!-- NOT YET IMPLEMENTED
@@ -138,6 +138,7 @@
         qp.add('from', start_date.value);
         qp.add('to', end_date.value);
         qp.add('sortby', document.getElementById('sortby').value); // "date" or "alphabetical"
+        qp.add('starred', document.getElementById('starred').checked);
         window.location.replace(qp.toString());
       }
 
