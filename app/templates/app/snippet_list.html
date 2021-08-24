@@ -78,7 +78,7 @@
       let now = new Date();
       const max = now.toISOString().split('T')[0];
       // ew state
-      now.setDate(now.getDate() - 30);
+      now.setDate(now.getDate() - 365);
       const min = now.toISOString().split('T')[0];
 
       start_date.min = '2000-01-01';
