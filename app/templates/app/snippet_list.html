@@ -117,23 +117,23 @@
       }
 
       function adv_search_req() {
-            const query = document.getElementById('advsearchbox').value;
-            if (query === '') {
-                return;
-            }
-            let url = '{% url "app:snippet-advanced-search" "tmp" %}'.replace(/tmp/, query);
-            let qp = new QueryParameter(url);
-            qp.add('from', start_date.value);
-            qp.add('to', end_date.value);
-            window.location.replace(qp.toString());
+        const query = document.getElementById('advsearchbox').value;
+        if (query === '') {
+            return;
+        }
+        let url = '{% url "app:snippet-advanced-search" "tmp" %}'.replace(/tmp/, query);
+        let qp = new QueryParameter(url);
+        qp.add('from', start_date.value);
+        qp.add('to', end_date.value);
+        window.location.replace(qp.toString());
       }
 
       const asb = document.getElementById('advsearchbox');
       asb.addEventListener('keyup', function(event) {
-          if (event.keyCode === 13) {
-              event.preventDefault();
-              search_req();
-          }
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            search_req();
+        }
       });
     </script>
 {% endblock %}
