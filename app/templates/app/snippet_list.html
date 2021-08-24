@@ -104,14 +104,14 @@
       }
       QueryParameter.prototype.toString = function() {
         let ret = this.url;
-        let i = 0;
+        let first = true;
         for (const [k, v] of Object.entries(this.parameters)) {
-          if (i === 0) {
+          if (first) {
             ret += `?${k}=${v}`;
           } else {
             ret += `&${k}=${v}`;
           }
-          i++;
+          first = false;
         }
         return ret;
       }
