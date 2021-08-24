@@ -55,6 +55,17 @@ class SnippetDetailView(LoginRequiredMixin, generic.DetailView):
 
         return super(SnippetDetailView, self).get(request, *args, **kwargs)
 
+class SnippetAdvancedSearchListView(LoginRequiredMixin, generic.ListView):
+    model = Snippet
+    paginate_by = 18
+
+    def get_queryset(self):
+        print()
+        print(self.kwargs)
+        print(self.request.GET['from'])
+        print()
+        return Snippet.objects.all()
+
 class SnippetSearchListView(LoginRequiredMixin, generic.ListView):
     model = Snippet
     paginate_by = 18

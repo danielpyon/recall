@@ -5,6 +5,46 @@
       <h1>Snippets</h1>
     </div>
 
+    {% if form.errors %}
+    <h2>Errors</h2>
+    <ul class="list-group py-4">
+        {% for k, v in form.errors.items %}
+            <li class="list-group-item">{{ k }}: {{ v }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <p>
+      <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#menu">
+        Advanced Search
+      </button>
+    </p>
+    <div class="collapse" id="menu">
+      <div class="card card-body">
+        {% csrf_token %}
+        <h3>Date Range</h3>
+        <label for="startdate">Start</label>
+        <input type="date" id="startdate" name="search-start">
+        <br>
+        <label for="enddate">End</label>
+        <input type="date" id="enddate" name="search-end">
+        
+        <h3>Sort By</h3>
+        <h3>Starred</h3>
+        <h3>Languages</h3>
+
+        <br>
+        <h3>Query</h3>
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" id="advsearchbox">
+        <br>
+
+        <div style="width: 250px; margin: auto; margin-top: 20px;">
+          <input class="btn btn-primary btn-lg btn-block" onclick="adv_search_req()" id="advsearch" type="button" value="Search">
+        </div>
+      </div>
+    </div>
+    <br>
+
     {% if snippet_list %}
       {% for snippet in snippet_list %}
       <div class="card text-center" style="margin-bottom: 15px;">
@@ -28,4 +68,72 @@
     {% else %}
       <p>No snippets found!</p>
     {% endif %}
+    
+    <script>
+      const start_date = document.getElementById('startdate');
+      const end_date = document.getElementById('enddate');
+
+      let now = new Date();
+      const max = now.toISOString().split('T')[0];
+      // ew state
+      now.setDate(now.getDate() - 30);
+      const min = now.toISOString().split('T')[0];
+
+      start_date.min = '2000-01-01';
+      start_date.max = max;
+      end_date.min = min;
+      end_date.max = max;
+
+      start_date.addEventListener('change', () => {
+        if (start_date.value) {
+          end_date.min = start_date.value;
+        }
+      }, false);
+
+      start_date.value = min;
+      end_date.value = max;
+
+      class QueryParameter {
+        constructor(url = '') {
+          this.url = url;
+          this.parameters = {};
+        }
+        add(key, value) {
+          this.parameters[key] = value;
+        }
+      }
+      QueryParameter.prototype.toString = function() {
+        let ret = this.url;
+        let i = 0;
+        for (const [k, v] of Object.entries(this.parameters)) {
+          if (i === 0) {
+            ret += '?' + k + '=' + v;
+          } else {
+            ret += '&' + k + '=' + v;
+          }
+          i++;
+        }
+        return ret;
+      }
+
+      function adv_search_req() {
+            const query = document.getElementById('advsearchbox').value;
+            if (query === '') {
+                return;
+            }
+            let url = '{% url "app:snippet-advanced-search" "tmp" %}'.replace(/tmp/, query);
+            let qp = new QueryParameter(url);
+            qp.add('from', start_date.value);
+            qp.add('to', end_date.value);
+            window.location.replace(qp.toString());
+      }
+
+      const asb = document.getElementById('advsearchbox');
+      asb.addEventListener('keyup', function(event) {
+          if (event.keyCode === 13) {
+              event.preventDefault();
+              search_req();
+          }
+      });
+    </script>
 {% endblock %}
