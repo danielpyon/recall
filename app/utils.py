@@ -9,3 +9,6 @@ def language_counts(user):
         else:
             counts[lang] = 1
     return counts
+
+def language_types(user):
+    return list(map(lambda x: x[0], list(set(Snippet.objects.filter(user=user).values_list('language')))))

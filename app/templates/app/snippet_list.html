@@ -41,13 +41,10 @@
         <input type="checkbox" style="width: 20px; height: 20px;" id="starred">
         <br>
         
-        <!-- NOT YET IMPLEMENTED
         <h3>Languages</h3>
         <select id="languages" multiple>
-          <option value="python">python</option>
         </select>
         <br>
-        -->
 
         <h3>Query</h3>
         <input class="form-control mr-sm-2" type="text" placeholder="Search" id="advsearchbox">
@@ -131,6 +128,17 @@
         return ret;
       }
 
+      function get_selected_languages() {
+        const languages = document.getElementById('languages');
+        let selected = [];
+        for (let option of languages.options) {
+          if (option.selected) {
+            selected.push(option.value);
+          }
+        }
+        return selected;
+      }
+
       function adv_search_req() {
         const query = document.getElementById('advsearchbox').value;
         let url = '{% url "app:snippet-advanced-search" "tmp" %}'.replace(/tmp/, query);
@@ -139,6 +147,7 @@
         qp.add('to', end_date.value);
         qp.add('sortby', document.getElementById('sortby').value); // "date" or "alphabetical"
         qp.add('starred', document.getElementById('starred').checked);
+        qp.add('languages', get_selected_languages());
         window.location.replace(qp.toString());
       }
 
@@ -149,5 +158,20 @@
             adv_search_req();
         }
       });
+
+      const url = '{% url "app:languages" %}';
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
+      xhr.onload = () => {
+        const languages = document.getElementById('languages');
+        xhr.response['languages'].forEach(x => {
+          const option = document.createElement('option');
+          option.value = x;
+          option.innerText = x;
+          languages.appendChild(option);
+        });
+      };
+      xhr.open('GET', url);
+      xhr.send();
     </script>
 {% endblock %}

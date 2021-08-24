@@ -23,5 +23,6 @@ urlpatterns = [
     path('tags/<int:pk>/edit', views.tag_edit , name='tag-edit'),
     path('tags/search/<str:query>', views.TagSearchListView.as_view(), name='tag-search'),
     path('tags/search', views.TagSearchListView.as_view(), name='tag-search'),
+    path('languages', views.languages, name='languages'),
     path('settings/', views.settings_view, name='settings'),
 ]

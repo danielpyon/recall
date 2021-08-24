@@ -1,16 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.core.paginator import Paginator
 
 from .models import Tag, Snippet
 from .forms import SnippetForm, TagForm
-from .utils import language_counts
+from .utils import language_counts, language_types
 
 import json
 
@@ -74,6 +73,7 @@ class SnippetAdvancedSearchListView(LoginRequiredMixin, generic.ListView):
         end = self.get_or_none('to')
         sortby = self.get_or_none('sortby')
         starred = self.get_or_none('starred')
+        languages = self.get_or_none('languages')
 
         args = {
             'user': self.request.user,
@@ -86,11 +86,20 @@ class SnippetAdvancedSearchListView(LoginRequiredMixin, generic.ListView):
                 args['starred'] = True
             else:
                 args['starred'] = False
+        if languages is not None:
+            args['language__in'] = languages.split(',')
 
         if sortby is not None:
             return Snippet.objects.filter(**args).order_by('-pub_date' if sortby == 'date' else 'title')
         else:
             return Snippet.objects.filter(**args)
+
+@login_required
+def languages(request):
+    data = {
+        'languages': language_types(request.user)
+    }
+    return JsonResponse(data)
 
 class SnippetSearchListView(LoginRequiredMixin, generic.ListView):
     model = Snippet

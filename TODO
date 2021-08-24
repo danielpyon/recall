@@ -1,7 +1,6 @@
 high priority:
-    - [adv search] sort by date, name and show only certain languages or starred, date range
-    - [adv search] language choice
 	- [ui] confirmation popup for all deletion-related things
+    - [adv search] fix the naive date warning
 
 low priority:
     - [ui] add tags in the snippet form
@@ -10,4 +9,3 @@ low priority:
     - [auth] password reset
     - [ui] add <hr> in signup.html between form and errors
     - [ui] weird issue with 100vw in base_generic.html
-    - [adv search] - blank queries trigger an error
