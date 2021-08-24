@@ -1,5 +1,6 @@
 high priority:
     - [adv search] sort by date, name and show only certain languages or starred
+	- [ui] confirmation popup for all deletion-related things
 
 low priority:
     - [ui] add tags in the snippet form

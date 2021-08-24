@@ -102,7 +102,6 @@
             let counts = {{ counts|safe }};
             const headers = ['Language', 'Lines'];
             counts.unshift(headers);
-            console.log(counts);
             data = google.visualization.arrayToDataTable(counts);
 
             var options = {
