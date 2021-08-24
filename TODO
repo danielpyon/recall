@@ -1,5 +1,6 @@
 high priority:
     - [adv search] sort by date, name and show only certain languages or starred, date range
+    - [adv search] language choice
 	- [ui] confirmation popup for all deletion-related things
 
 low priority:

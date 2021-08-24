@@ -72,6 +72,8 @@ class SnippetAdvancedSearchListView(LoginRequiredMixin, generic.ListView):
 
         start = self.get_or_none('from')
         end = self.get_or_none('to')
+        
+        sortby = self.get_or_none('sortby')
 
         args = {
             'user': self.request.user,
@@ -80,7 +82,10 @@ class SnippetAdvancedSearchListView(LoginRequiredMixin, generic.ListView):
         if start is not None and end is not None:
             args['pub_date__range'] = [str(start), str(end)]
         
-        return Snippet.objects.filter(**args)
+        if sortby is not None:
+            return Snippet.objects.filter(**args).order_by('-pub_date' if sortby == 'date' else 'title')
+        else:
+            return Snippet.objects.filter(**args)
 
 class SnippetSearchListView(LoginRequiredMixin, generic.ListView):
     model = Snippet

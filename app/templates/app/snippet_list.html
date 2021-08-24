@@ -20,7 +20,7 @@
       </button>
     </p>
     <div class="collapse" id="menu">
-      <div class="card card-body">
+      <div class="card card-body" style="background-color: rgb(218, 218, 218);">
         {% csrf_token %}
         <h3>Date Range</h3>
         <label for="startdate">Start</label>
@@ -29,13 +29,26 @@
         <label for="enddate">End</label>
         <input type="date" id="enddate" name="search-end">
         <br>
-        <h3>Sort By</h3>
-        <br>
-        <h3>Starred</h3>
-        <br>
-        <h3>Languages</h3>
 
+        <h3>Sort By</h3>
+        <select id="sortby">
+          <option value="date">Date</option>
+          <option value="alphabetical">Alphabetical</option>
+        </select>
         <br>
+        
+        <h3>Starred</h3>
+        <input type="checkbox" style="width: 20px; height: 20px;" id="starred" value="starred">
+        <br>
+        
+        <!-- NOT YET IMPLEMENTED
+        <h3>Languages</h3>
+        <select id="languages" multiple>
+          <option value="python">python</option>
+        </select>
+        <br>
+        -->
+
         <h3>Query</h3>
         <input class="form-control mr-sm-2" type="text" placeholder="Search" id="advsearchbox">
         <br>
@@ -124,6 +137,7 @@
         let qp = new QueryParameter(url);
         qp.add('from', start_date.value);
         qp.add('to', end_date.value);
+        qp.add('sortby', document.getElementById('sortby').value); // "date" or "alphabetical"
         window.location.replace(qp.toString());
       }
 
