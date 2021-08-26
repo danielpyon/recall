@@ -21,7 +21,7 @@ class Tag(models.Model):
         return f'Tag "{self.tag_type}"'
 
 class Snippet(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique id for a particular snippet')
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     code = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) # deletes snippet when user is deleted
     language = models.CharField(max_length=100)
