@@ -1,3 +1,7 @@
+# Static files
+static/
+staticfiles/
+
 # Django #
 *.log
 *.pot
