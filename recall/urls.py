@@ -20,6 +20,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
 from django.utils.decorators import method_decorator
+from django.conf.urls.static import static
 from .views import SignupFormView, AnonOnlyMixin
 
 class FixedPasswordResetView(AnonOnlyMixin, PasswordResetView):
@@ -40,4 +41,6 @@ urlpatterns = [
     
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
+
+    static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
 ]
