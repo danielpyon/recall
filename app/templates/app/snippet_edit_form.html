@@ -167,13 +167,13 @@
     }
 
     const title_input = document.getElementById('id_title');
-    title_input.value = '{{ snippet.title }}';
+    title_input.value = `{{ snippet.title }}`;
 
     const desc_input = document.getElementById('id_description');
-    desc_input.value = '{{ snippet.description }}';
+    desc_input.value = `{{ snippet.description }}`;
 
     const starred_input = document.getElementById('id_starred');
-    starred_input.value = Boolean('{{ snippet.starred }}');
+    starred_input.value = Boolean(`{{ snippet.starred }}`);
 
     const tags_input = document.getElementById('id_tags');
     if (tags[0].textContent !== 'none') {
